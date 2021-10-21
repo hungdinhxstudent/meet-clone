@@ -10,7 +10,10 @@ const io = new Server(httpServer, { cors: { origin: "*" } });
 
 app.use(cors());
 app.use(express.json());
-
+app.use(function(req, res, next) {
+	res.header('Access-Control-Allow-Origin', req.header('origin') );
+	next();
+  });
 app.set("port", process.env.PORT || 4001);
 
 sanitizeString = (str) => {
