@@ -1,11 +1,14 @@
 const express = require('express')
 const http = require('http')
-var cors = require('cors')
+const cors = require('cors')
 const app = express()
-var xss = require("xss")
+const xss = require("xss")
+const { Server } = require('socket.io');
 
-var server = http.createServer(app)
-var io = require('socket.io')(server)
+
+const httpServer = http.createServer(app)
+const io = new Server(httpServer, { cors: '*'});
+
 
 app.use(cors())
 app.use(express.json())
@@ -103,6 +106,6 @@ io.on('connection', (socket) => {
 	})
 })
 
-server.listen(app.get('port'), () => {
+app.listen(app.get('port'), () => {
 	console.log("listening on", app.get('port'))
 })
