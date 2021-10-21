@@ -6,7 +6,7 @@ const xss = require("xss");
 const { Server } = require("socket.io");
 
 const httpServer = http.createServer(app);
-const io = new Server(httpServer, { cors: "*", credentials: true });
+const io = new Server(httpServer, { cors: "https://meet-clone.vercel.app", credentials: true });
 
 app.use(cors());
 app.use(express.json());
