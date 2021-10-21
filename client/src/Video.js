@@ -270,7 +270,7 @@ class Video extends Component {
 	}
 
 	connectToSocketServer = () => {
-		socket = io.connect(server_url)
+		socket = io(server_url)
 
 		socket.on('signal', this.gotMessageFromServer)
 

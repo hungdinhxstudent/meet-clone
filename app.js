@@ -1,19 +1,16 @@
 const express = require("express");
 const http = require("http");
-const cors = require("cors");
+var cors = require("cors");
 const app = express();
-const xss = require("xss");
-const { Server } = require("socket.io");
+var xss = require("xss");
 
-const httpServer = http.createServer(app);
-const io = new Server(httpServer, { cors: { origin: "*" } });
-
+var server = http.createServer(app);
 app.use(cors());
+var io = require("socket.io")(server, { cors: { origin: "*" } });
+
+
 app.use(express.json());
-app.use(function(req, res, next) {
-	res.header('Access-Control-Allow-Origin', req.header('origin') );
-	next();
-  });
+
 app.set("port", process.env.PORT || 4001);
 
 sanitizeString = (str) => {
@@ -124,6 +121,6 @@ io.on("connection", (socket) => {
   });
 });
 
-httpServer.listen(app.get("port"), () => {
+server.listen(app.get("port"), () => {
   console.log("listening on", app.get("port"));
 });
